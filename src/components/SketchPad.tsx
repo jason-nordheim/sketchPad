@@ -1,23 +1,18 @@
 import { FC, TouchEvent, useCallback, useEffect, useRef, useState } from "react";
 import { drawPaths } from "../utils/draw";
 
-/**
- * @param size the size of the sketch pad in pixels
- */
-export type SketchPadProps = {
+export interface SketchPadProps {
   size?: number;
-  backgroundColor?: string;
-  boxShadow?: string;
+  styles?: React.HTMLAttributes<HTMLCanvasElement>["style"];
   scale?: [number, number];
   showUndo?: boolean;
   showExportToPng?: boolean;
   showExportJson?: boolean;
-};
+}
 
 const defaults: Required<SketchPadProps> = {
   size: 400,
-  backgroundColor: "white",
-  boxShadow: "0px 0px 10px 2px black",
+  styles: { backgroundColor: "white", boxShadow: "0px 0px 10px 2px black" },
   scale: [1, 1],
   showUndo: true,
   showExportToPng: true,
@@ -25,7 +20,7 @@ const defaults: Required<SketchPadProps> = {
 };
 
 export const SketchPad: FC<SketchPadProps> = (props) => {
-  const { size, backgroundColor, boxShadow, scale, showUndo, showExportToPng, showExportJson } = {
+  const { size, styles, scale, showUndo, showExportToPng, showExportJson } = {
     ...props,
     ...defaults,
   };
@@ -168,7 +163,7 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
       <canvas
         height={size}
         width={size}
-        style={{ backgroundColor, boxShadow }}
+        style={styles}
         ref={canvasRef}
         onMouseDown={(evt) => handleMouseDown(evt)}
         onTouchStart={(evt) => handleTouchStart(evt)}

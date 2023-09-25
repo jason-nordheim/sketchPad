@@ -11,6 +11,7 @@ type SketchPadProps = {
   scale?: [number, number];
   showUndo?: boolean;
   showExportToPng?: boolean;
+  showExportJson: boolean;
 };
 
 const defaults: Required<SketchPadProps> = {
@@ -20,10 +21,14 @@ const defaults: Required<SketchPadProps> = {
   scale: [1, 1],
   showUndo: true,
   showExportToPng: true,
+  showExportJson: true,
 };
 
 export const SketchPad: FC<SketchPadProps> = (props) => {
-  const { size, backgroundColor, boxShadow, scale, showUndo, showExportToPng } = { ...props, ...defaults };
+  const { size, backgroundColor, boxShadow, scale, showUndo, showExportToPng, showExportJson } = {
+    ...props,
+    ...defaults,
+  };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [paths, setPaths] = useState<number[][][]>([]);
@@ -143,6 +148,21 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
     }
   };
 
+  const downloadJson = () => {
+    if (document && paths) {
+      const data = JSON.stringify(paths);
+      const content = `data:text/plan;charset=utf-8,${encodeURIComponent(data)}`;
+      const anchor = document.createElement("a");
+      anchor.style.display = "none";
+      anchor.download = "paths.json";
+      anchor.href = content;
+      document.body.appendChild(anchor);
+      anchor.click();
+      window.URL.revokeObjectURL(content);
+      document.body.removeChild(anchor);
+    }
+  };
+
   return (
     <div id="sketch-pad-wrapper">
       <canvas
@@ -166,6 +186,11 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
         {showExportToPng && (
           <button disabled={undoDisabled} onClick={() => downloadPng()}>
             Download PNG
+          </button>
+        )}
+        {showExportJson && (
+          <button disabled={undoDisabled} onClick={() => downloadJson()}>
+            Download Paths
           </button>
         )}
       </div>

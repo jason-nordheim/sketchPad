@@ -19,3 +19,34 @@ export const getPosition = (
   }
   throw new Error("Unsupported event provided");
 };
+
+export const downloadPng = (canvas: HTMLCanvasElement) => {
+  if (document && canvas) {
+    canvas.toBlob(async (blob) => {
+      if (blob) {
+        const content = window.URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.style.display = "none";
+        anchor.download = "sketch.png";
+        anchor.href = content;
+        document.body.appendChild(anchor);
+        anchor.click();
+        window.URL.revokeObjectURL(content);
+        document.body.removeChild(anchor);
+      }
+    });
+  }
+};
+
+export const downloadJson = (paths: number[][][]) => {
+  const data = JSON.stringify(paths);
+  const content = `data:text/plan;charset=utf-8,${encodeURIComponent(data)}`;
+  const anchor = document.createElement("a");
+  anchor.style.display = "none";
+  anchor.download = "paths.json";
+  anchor.href = content;
+  document.body.appendChild(anchor);
+  anchor.click();
+  window.URL.revokeObjectURL(content);
+  document.body.removeChild(anchor);
+};

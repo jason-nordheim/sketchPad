@@ -1,6 +1,6 @@
 import { FC, TouchEvent, useCallback, useEffect, useRef, useState } from "react";
 import { drawPaths } from "../utils/draw";
-import { getPosition } from "./SketchPad.utils";
+import { downloadJson, downloadPng, getPosition } from "./SketchPad.utils";
 
 export interface SketchPadProps {
   size?: number;
@@ -107,39 +107,6 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
     draw();
   };
 
-  const downloadPng = () => {
-    if (document) {
-      canvasRef.current?.toBlob(async (blob) => {
-        if (blob) {
-          const content = window.URL.createObjectURL(blob);
-          const anchor = document.createElement("a");
-          anchor.style.display = "none";
-          anchor.download = "sketch.png";
-          anchor.href = content;
-          document.body.appendChild(anchor);
-          anchor.click();
-          window.URL.revokeObjectURL(content);
-          document.body.removeChild(anchor);
-        }
-      }, "image/png");
-    }
-  };
-
-  const downloadJson = () => {
-    if (document && paths) {
-      const data = JSON.stringify(paths);
-      const content = `data:text/plan;charset=utf-8,${encodeURIComponent(data)}`;
-      const anchor = document.createElement("a");
-      anchor.style.display = "none";
-      anchor.download = "paths.json";
-      anchor.href = content;
-      document.body.appendChild(anchor);
-      anchor.click();
-      window.URL.revokeObjectURL(content);
-      document.body.removeChild(anchor);
-    }
-  };
-
   return (
     <div id="sketch-pad-wrapper">
       <canvas
@@ -161,12 +128,12 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
           </button>
         )}
         {showExportToPng && (
-          <button disabled={undoDisabled} onClick={() => downloadPng()}>
+          <button disabled={undoDisabled} onClick={() => downloadPng(canvasRef.current!)}>
             Download PNG
           </button>
         )}
         {showExportJson && (
-          <button disabled={undoDisabled} onClick={() => downloadJson()}>
+          <button disabled={undoDisabled} onClick={() => downloadJson(paths)}>
             Download Paths
           </button>
         )}

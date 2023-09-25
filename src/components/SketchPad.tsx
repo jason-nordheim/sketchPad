@@ -11,7 +11,7 @@ type SketchPadProps = {
   scale?: [number, number];
   showUndo?: boolean;
   showExportToPng?: boolean;
-  showExportJson: boolean;
+  showExportJson?: boolean;
 };
 
 const defaults: Required<SketchPadProps> = {

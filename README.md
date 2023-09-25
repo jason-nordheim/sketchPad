@@ -23,14 +23,13 @@ function App() {
 }
 ```
 
-The `SketchPad` component supports the following props via the exported type `SketchPadProps`:
+The `SketchPad` component supports the following props via the exported interface `SketchPadProps`:
 
 ```ts
-type SketchPadProps = {
+interface SketchPadProps = {
   // size of the canvas element in pixels
   size?: number;
-  backgroundColor?: string;
-  boxShadow?: string;
+  styles: React.HTMLAttributes<HTMLCanvasElement>["style"];
   // canvas context scale
   scale?: [number, number];
   // hiding/showing UI elements
@@ -45,11 +44,10 @@ The default to the following values:
 ```ts
 {
   size: 400,
-  backgroundColor: "white",
-  boxShadow: "0px 0px 10px 2px black",
+  styles: { backgroundColor: "white", boxShadow: "0px 0px 10px 2px black" },
   scale: [1, 1],
   showUndo: true,
   showExportToPng: true,
   showExportJson: true,
-}
+};
 ```

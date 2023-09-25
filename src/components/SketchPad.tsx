@@ -4,7 +4,7 @@ import { drawPaths } from "../utils/draw";
 /**
  * @param size the size of the sketch pad in pixels
  */
-type SketchPadProps = {
+export type SketchPadProps = {
   size?: number;
   backgroundColor?: string;
   boxShadow?: string;

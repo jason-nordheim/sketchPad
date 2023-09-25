@@ -1,5 +1,6 @@
 import { FC, TouchEvent, useCallback, useEffect, useRef, useState } from "react";
 import { drawPaths } from "../utils/draw";
+import { getPosition } from "./SketchPad.utils";
 
 export interface SketchPadProps {
   size?: number;
@@ -36,25 +37,6 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
     return ctx;
   }, [canvasRef]);
 
-  const getPosition = (evt: React.MouseEvent<HTMLCanvasElement, MouseEvent> | TouchEvent): [number, number] => {
-    if (evt.type === "mousedown" || evt.type === "mousemove") {
-      const { clientX, clientY } = evt as React.MouseEvent<HTMLCanvasElement, MouseEvent>;
-      const x = Math.round(clientX);
-      const y = Math.round(clientY);
-      return [x, y];
-    } else if (evt instanceof TouchEvent) {
-      evt.preventDefault();
-      const loc = evt.touches[0];
-      const rect = canvasRef.current?.getBoundingClientRect();
-      if (rect) {
-        const x = Math.round(loc.clientX);
-        const y = Math.round(loc.clientY - rect.top);
-        return [x, y];
-      }
-    }
-    throw new Error("Unsupported event provided");
-  };
-
   useEffect(() => {
     if (canvasRef.current) {
       const ctx = getContext();
@@ -90,25 +72,25 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
   };
 
   const handleMouseDown = (evt: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
-    const position = getPosition(evt);
+    const position = getPosition(evt, canvasRef.current!);
     handleStartPath(position);
   };
 
-  const handleTouchStart = (evt: TouchEvent) => {
-    const position = getPosition(evt);
+  const handleTouchStart = (evt: TouchEvent<HTMLCanvasElement>) => {
+    const position = getPosition(evt, canvasRef.current!);
     handleStartPath(position);
   };
 
   const handleMouseMove = (evt: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     if (isDrawing) {
-      const position = getPosition(evt);
+      const position = getPosition(evt, canvasRef.current!);
       handleDrawPath(position);
     }
   };
 
-  const handleTouchMove = (evt: TouchEvent) => {
+  const handleTouchMove = (evt: TouchEvent<HTMLCanvasElement>) => {
     if (isDrawing) {
-      const position = getPosition(evt);
+      const position = getPosition(evt, canvasRef.current!);
       handleDrawPath(position);
     }
   };

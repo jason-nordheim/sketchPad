@@ -1,4 +1,4 @@
-import { FC, TouchEvent, useCallback, useEffect, useRef, useState } from "react";
+import { FC, TouchEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DrawPathOptions, drawPaths } from "../utils/draw";
 import { downloadJson, downloadPng, getPosition } from "./SketchPad.utils";
 import { Canvas } from "./Canvas";
@@ -37,7 +37,7 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
       ...props.styles,
     },
   };
-  const drawOpts = { color, lineCap, lineJoin, lineWidth };
+  const drawOpts = useMemo(() => ({ color, lineCap, lineJoin, lineWidth }), [color, lineCap, lineJoin, lineWidth]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [paths, setPaths] = useState<number[][][]>([]);
   const [isDrawing, setIsDrawing] = useState(false);

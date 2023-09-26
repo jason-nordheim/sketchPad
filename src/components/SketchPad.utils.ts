@@ -4,10 +4,10 @@ export const getPosition = (
 ): [number, number] => {
   const rect = canvasRef?.getBoundingClientRect();
   if (evt.type === "mousedown" || evt.type === "mousemove") {
-    const { clientX, clientY } = evt as React.MouseEvent<HTMLCanvasElement, MouseEvent>;
+    const { clientX, clientY, movementX, movementY } = evt as React.MouseEvent<HTMLCanvasElement, MouseEvent>;
     const x = Math.round(Math.abs(rect.x - clientX));
     const y = Math.round(Math.abs(rect.y - clientY));
-    console.log({ x, y });
+    console.log({ x, y, movementX, movementY });
     return [x, y];
   } else if (evt instanceof TouchEvent) {
     evt.preventDefault();

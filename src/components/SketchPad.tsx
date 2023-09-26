@@ -1,6 +1,6 @@
 import { FC, TouchEvent, useCallback, useEffect, useRef, useState } from "react";
-import { drawPaths } from "../utils/draw";
 import { downloadJson, downloadPng, getPosition } from "./SketchPad.utils";
+import { drawPaths } from "../utils/draw";
 
 export interface SketchPadProps {
   size?: number;

@@ -5,6 +5,7 @@ import { Canvas } from "./Canvas";
 
 interface SketchPadControlOptions {
   undo?: boolean;
+  clear?: boolean;
   exportToPng?: boolean;
   exportJson?: boolean;
 }
@@ -20,7 +21,7 @@ const defaults: Required<SketchPadProps> = {
   size: 400,
   styles: { backgroundColor: "white", boxShadow: "0px 0px 10px 2px black" },
   scale: [1, 1],
-  controls: { undo: true, exportJson: true, exportToPng: true },
+  controls: { undo: true, exportJson: true, exportToPng: true, clear: true },
 };
 
 export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
@@ -55,7 +56,7 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
     }
   }, [getContext, scale]);
 
-  const draw = () => {
+  const draw = useCallback(() => {
     const ctx = getContext();
     ctx.clearRect(0, 0, size, size);
     if (paths.length > 0) {
@@ -64,7 +65,11 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
       setUndoDisabled(true);
     }
     drawPaths(ctx, paths, drawOpts);
-  };
+  }, [drawOpts, getContext, paths, size]);
+
+  useEffect(() => {
+    draw();
+  }, [paths, draw]);
 
   const handleStartPath = (position: [number, number]) => {
     setPaths((existingPaths) => [...existingPaths, [position]]);
@@ -115,7 +120,10 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
       currentPaths.pop();
       return currentPaths;
     });
-    draw();
+  };
+
+  const handleClear = () => {
+    setPaths(() => []);
   };
 
   useEffect(() => {
@@ -148,6 +156,11 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
         {controls?.undo && (
           <button onClick={handleUndo} disabled={undoDisabled}>
             Undo
+          </button>
+        )}
+        {controls?.clear && (
+          <button disabled={undoDisabled} onClick={handleClear}>
+            Clear
           </button>
         )}
         {controls?.exportToPng && (

@@ -2,15 +2,16 @@ export const getPosition = (
   evt: React.MouseEvent<HTMLCanvasElement, MouseEvent> | React.TouchEvent<HTMLCanvasElement>,
   canvasRef: HTMLCanvasElement
 ): [number, number] => {
+  const rect = canvasRef?.getBoundingClientRect();
   if (evt.type === "mousedown" || evt.type === "mousemove") {
     const { clientX, clientY } = evt as React.MouseEvent<HTMLCanvasElement, MouseEvent>;
-    const x = Math.round(clientX);
-    const y = Math.round(clientY);
+    const x = Math.round(Math.abs(rect.x - clientX));
+    const y = Math.round(Math.abs(rect.y - clientY));
+    console.log({ x, y });
     return [x, y];
   } else if (evt instanceof TouchEvent) {
     evt.preventDefault();
     const loc = evt.touches[0];
-    const rect = canvasRef?.getBoundingClientRect();
     if (rect) {
       const x = Math.round(loc.clientX);
       const y = Math.round(loc.clientY - rect.top);

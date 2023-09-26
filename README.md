@@ -61,3 +61,7 @@ The default to the following values:
   showExportJson: true,
 }
 ```
+
+# Developing Locally:
+
+See [.developing-locally.md](README.develop.md)

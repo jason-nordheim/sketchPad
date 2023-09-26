@@ -19,8 +19,12 @@ const defaults = {
 
 export const SketchPad: FC<SketchPadProps> = (props) => {
   const { size, styles, scale, showUndo, showExportToPng, showExportJson } = {
-    ...props,
     ...defaults,
+    ...props,
+    styles: {
+      ...defaults.styles,
+      ...props.styles,
+    },
   };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);

@@ -7,7 +7,10 @@ Docs created using Storybook. See them live [here](https://jason-nordheim.github
 ## Features
 
 - Draw a path
+  - using your mouse
+  - using touch
 - Undo a path (remove it)
+- Clear the board
 - Download as PNG
 - Download as Paths (as JSON)
 

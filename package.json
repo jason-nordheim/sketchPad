@@ -16,7 +16,11 @@
   "keywords": [
     "react",
     "typescript",
-    "canvas"
+    "drawing",
+    "canvas",
+    "sketch",
+    "export",
+    "typescript"
   ],
   "scripts": {
     "dev": "vite",

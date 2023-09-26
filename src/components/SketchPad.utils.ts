@@ -1,3 +1,5 @@
+import { DrawPathOptions } from "../utils";
+
 export const getPosition = (
   evt: React.MouseEvent<HTMLCanvasElement, MouseEvent> | React.TouchEvent<HTMLCanvasElement>,
   canvasRef: HTMLCanvasElement
@@ -38,8 +40,8 @@ export const downloadPng = (canvas: HTMLCanvasElement) => {
   }
 };
 
-export const downloadJson = (paths: number[][][]) => {
-  const data = JSON.stringify(paths);
+export const downloadJson = (paths: number[][][], drawingOpts: DrawPathOptions, canvasStyle: React.CSSProperties) => {
+  const data = JSON.stringify({ paths, drawingOpts, canvasStyle });
   const content = `data:text/plan;charset=utf-8,${encodeURIComponent(data)}`;
   const anchor = document.createElement("a");
   anchor.style.display = "none";

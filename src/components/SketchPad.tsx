@@ -142,7 +142,7 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
           </button>
         )}
         {controls?.exportJson && (
-          <button disabled={undoDisabled} onClick={() => downloadJson(paths)}>
+          <button disabled={undoDisabled} onClick={() => downloadJson(paths, drawOpts, styles)}>
             Download Paths
           </button>
         )}

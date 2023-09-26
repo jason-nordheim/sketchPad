@@ -48,14 +48,6 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
     if (!ctx) throw new Error("No context found");
     return ctx;
   }, [canvasRef]);
-
-  useEffect(() => {
-    if (canvasRef.current) {
-      const ctx = getContext();
-      ctx.scale(scale[0], scale[1]);
-    }
-  }, [getContext, scale]);
-
   const draw = useCallback(() => {
     const ctx = getContext();
     ctx.clearRect(0, 0, size, size);
@@ -66,6 +58,13 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
     }
     drawPaths(ctx, paths, drawOpts);
   }, [drawOpts, getContext, paths, size]);
+
+  useEffect(() => {
+    if (canvasRef.current) {
+      const ctx = getContext();
+      ctx.scale(scale[0], scale[1]);
+    }
+  }, [getContext, scale]);
 
   useEffect(() => {
     draw();

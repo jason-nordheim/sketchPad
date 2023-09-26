@@ -4,6 +4,7 @@ import { SketchPad } from ".";
 const meta = {
   title: "SketchPad",
   component: SketchPad,
+  tags: ["autodocs"],
 } satisfies Meta<typeof SketchPad>;
 
 type Story = StoryObj<typeof meta>;

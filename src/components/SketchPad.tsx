@@ -1,6 +1,7 @@
 import { FC, TouchEvent, useCallback, useEffect, useRef, useState } from "react";
 import { DrawPathOptions, drawPaths } from "../utils/draw";
 import { downloadJson, downloadPng, getPosition } from "./SketchPad.utils";
+import { Canvas } from "./Canvas";
 
 interface SketchPadControlOptions {
   undo?: boolean;
@@ -119,17 +120,15 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
 
   return (
     <div id="sketch-pad-wrapper">
-      <canvas
-        height={size}
-        width={size}
-        style={styles}
+      <Canvas
         ref={canvasRef}
-        onMouseDown={(evt) => handleMouseDown(evt)}
-        onTouchStart={(evt) => handleTouchStart(evt)}
-        onMouseMove={(evt) => handleMouseMove(evt)}
-        onTouchMove={(evt) => handleTouchMove(evt)}
-        onMouseUp={() => handleDrawEnd()}
-        onTouchEnd={() => handleDrawEnd()}
+        onTouchEnd={handleDrawEnd}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onTouchMove={handleTouchMove}
+        onTouchStart={handleTouchStart}
+        size={size}
+        styles={styles}
       />
       <div id="sketch-pad-controls">
         {controls?.undo && (

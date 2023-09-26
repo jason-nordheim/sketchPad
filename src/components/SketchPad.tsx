@@ -11,13 +11,10 @@ export interface SketchPadProps {
   showExportJson?: boolean;
 }
 
-const defaults: Required<SketchPadProps> = {
+const defaults = {
   size: 400,
   styles: { backgroundColor: "white", boxShadow: "0px 0px 10px 2px black" },
   scale: [1, 1],
-  showUndo: true,
-  showExportToPng: true,
-  showExportJson: true,
 };
 
 export const SketchPad: FC<SketchPadProps> = (props) => {

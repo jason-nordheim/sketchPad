@@ -40,21 +40,20 @@ interface SketchPadProps = {
   // canvas context scale
   scale?: [number, number];
   // hiding/showing UI elements
-  showUndo?: boolean; // undo button
-  showExportToPng?: boolean; // export to PNG
-  showExportJson?: boolean; // export paths to JSON
+  controls: {
+    undo?: boolean; // undo button
+    clear?: boolean; // clear button
+    exportToPng?: boolean; // export to PNG
+    exportJson?: boolean; // export paths to JSON
+  }
 };
 ```
 
 The default to the following values:
 
 ```ts
-{
   size: 400,
   styles: { backgroundColor: "white", boxShadow: "0px 0px 10px 2px black" },
   scale: [1, 1],
-  showUndo: true,
-  showExportToPng: true,
-  showExportJson: true,
-}
+  controls: { undo: true, exportJson: true, exportToPng: true, clear: true },
 ```

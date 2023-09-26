@@ -11,12 +11,15 @@ type Story = StoryObj<typeof meta>;
 
 export default meta;
 
-export const WhiteSketchPad: Story = {
+export const Default: Story = {
   args: {
     scale: [1, 1],
-    showExportJson: true,
-    showExportToPng: true,
-    showUndo: true,
+    controls: {
+      clear: true,
+      exportJson: true,
+      exportToPng: true,
+      undo: true,
+    },
     size: 400,
     styles: {
       backgroundColor: "white",

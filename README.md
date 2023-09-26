@@ -9,6 +9,8 @@ A simple React component for creating sketches created with React, TypeScript an
 - Download as PNG
 - Download as Paths (as JSON)
 
+
+
 ## Install
 
 `npm install react-canvas-sketchpad`

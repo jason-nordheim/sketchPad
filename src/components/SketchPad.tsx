@@ -108,6 +108,11 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
     draw();
   };
 
+  const clear = () => {
+    setPaths([]);
+    draw();
+  };
+
   return (
     <div id="sketch-pad-wrapper">
       <canvas
@@ -128,6 +133,9 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
             Undo
           </button>
         )}
+        <button disabled={undoDisabled} onClick={() => clear()}>
+          Clear
+        </button>
         {showExportToPng && (
           <button disabled={undoDisabled} onClick={() => downloadPng(canvasRef.current!)}>
             Download PNG

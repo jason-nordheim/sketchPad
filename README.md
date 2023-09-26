@@ -2,7 +2,7 @@
 
 A simple React component for creating sketches created with React, TypeScript and Vite.
 
-Docs created using Storybook.
+Docs created using Storybook. See them live [here](https://jason-nordheim.github.io/sketchPad/)
 
 ## Features
 

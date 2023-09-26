@@ -20,7 +20,8 @@
     "canvas",
     "sketch",
     "export",
-    "typescript"
+    "typescript",
+    "storybook"
   ],
   "scripts": {
     "dev": "vite",

@@ -1,8 +1,23 @@
-export const drawPath = (ctx: CanvasRenderingContext2D, path: number[][], color = "black") => {
+export interface DrawPathOptions {
+  color?: string;
+  lineWidth?: number;
+  lineJoin?: "bevel" | "miter" | "round";
+  lineCap?: "butt" | "round" | "square";
+}
+
+const defaults: Required<DrawPathOptions> = {
+  color: "black",
+  lineWidth: 2,
+  lineJoin: "round",
+  lineCap: "round",
+};
+
+export const drawPath = (ctx: CanvasRenderingContext2D, path: number[][], opts?: DrawPathOptions) => {
+  const { color, lineCap, lineJoin, lineWidth } = { ...defaults, ...opts };
   ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
-  ctx.lineJoin = "round";
-  ctx.lineCap = "round";
+  ctx.lineWidth = lineWidth;
+  ctx.lineJoin = lineJoin;
+  ctx.lineCap = lineCap;
   ctx.beginPath();
   const [x, y] = path[0];
   ctx.moveTo(x, y);
@@ -13,10 +28,10 @@ export const drawPath = (ctx: CanvasRenderingContext2D, path: number[][], color 
   ctx.stroke();
 };
 
-export const drawPaths = (ctx: CanvasRenderingContext2D, paths: number[][][], color = "black") => {
+export const drawPaths = (ctx: CanvasRenderingContext2D, paths: number[][][], opts?: DrawPathOptions) => {
   if (paths && paths.length) {
     for (let i = 0; i < paths.length; i++) {
-      drawPath(ctx, paths[i], color);
+      drawPath(ctx, paths[i], opts);
     }
   }
 };

@@ -1,3 +1,5 @@
+import { DrawPathOptions } from "../utils";
+
 export const getPosition = (
   evt: React.MouseEvent<HTMLCanvasElement, MouseEvent> | React.TouchEvent<HTMLCanvasElement>,
   canvasRef: HTMLCanvasElement
@@ -5,9 +7,8 @@ export const getPosition = (
   const rect = canvasRef?.getBoundingClientRect();
   if (evt.type === "mousedown" || evt.type === "mousemove") {
     const { clientX, clientY } = evt as React.MouseEvent<HTMLCanvasElement, MouseEvent>;
-    const x = Math.round(Math.abs(rect.x - clientX));
-    const y = Math.round(Math.abs(rect.y - clientY));
-    console.log({ x, y });
+    const x = Math.round(clientX - rect.left);
+    const y = Math.round(clientY - rect.top);
     return [x, y];
   } else if (evt instanceof TouchEvent) {
     evt.preventDefault();
@@ -39,8 +40,8 @@ export const downloadPng = (canvas: HTMLCanvasElement) => {
   }
 };
 
-export const downloadJson = (paths: number[][][]) => {
-  const data = JSON.stringify(paths);
+export const downloadJson = (paths: number[][][], drawingOpts: DrawPathOptions, canvasStyle: React.CSSProperties) => {
+  const data = JSON.stringify({ paths, drawingOpts, canvasStyle });
   const content = `data:text/plan;charset=utf-8,${encodeURIComponent(data)}`;
   const anchor = document.createElement("a");
   anchor.style.display = "none";

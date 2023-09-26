@@ -118,15 +118,29 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
     draw();
   };
 
+  useEffect(() => {
+    if (window) {
+      window.addEventListener("mouseup", handleDrawEnd);
+      window.addEventListener("touchend", handleDrawEnd);
+    }
+    return () => {
+      if (window) {
+        window.removeEventListener("mouseup", handleDrawEnd);
+        window.removeEventListener("touchend", handleDrawEnd);
+      }
+    };
+  }, []);
+
   return (
     <div id="sketch-pad-wrapper">
       <Canvas
         ref={canvasRef}
-        onTouchEnd={handleDrawEnd}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
+        onMouseUp={handleDrawEnd}
         onTouchMove={handleTouchMove}
         onTouchStart={handleTouchStart}
+        onTouchEnd={handleDrawEnd}
         size={size}
         styles={styles}
       />

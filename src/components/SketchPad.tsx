@@ -1,32 +1,41 @@
 import { FC, TouchEvent, useCallback, useEffect, useRef, useState } from "react";
-import { drawPaths } from "../utils/draw";
+import { DrawPathOptions, drawPaths } from "../utils/draw";
 import { downloadJson, downloadPng, getPosition } from "./SketchPad.utils";
+
+interface SketchPadControlOptions {
+  undo?: boolean;
+  exportToPng?: boolean;
+  exportJson?: boolean;
+}
 
 export interface SketchPadProps {
   size?: number;
   styles?: React.HTMLAttributes<HTMLCanvasElement>["style"];
   scale?: [number, number];
-  showUndo?: boolean;
-  showExportToPng?: boolean;
-  showExportJson?: boolean;
+  controls?: SketchPadControlOptions;
 }
 
-const defaults = {
+const defaults: Required<SketchPadProps> = {
   size: 400,
   styles: { backgroundColor: "white", boxShadow: "0px 0px 10px 2px black" },
   scale: [1, 1],
+  controls: { undo: true, exportJson: true, exportToPng: true },
 };
 
-export const SketchPad: FC<SketchPadProps> = (props) => {
-  const { size, styles, scale, showUndo, showExportToPng, showExportJson } = {
+export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
+  const { size, styles, scale, controls, color, lineCap, lineJoin, lineWidth } = {
     ...defaults,
     ...props,
+    controls: {
+      ...defaults.controls,
+      ...props.controls,
+    },
     styles: {
       ...defaults.styles,
       ...props.styles,
     },
   };
-
+  const drawOpts = { color, lineCap, lineJoin, lineWidth };
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [paths, setPaths] = useState<number[][][]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -53,7 +62,7 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
     } else {
       setUndoDisabled(true);
     }
-    drawPaths(ctx, paths);
+    drawPaths(ctx, paths, drawOpts);
   };
 
   const handleStartPath = (position: [number, number]) => {
@@ -123,17 +132,17 @@ export const SketchPad: FC<SketchPadProps> = (props) => {
         onTouchEnd={() => handleDrawEnd()}
       />
       <div id="sketch-pad-controls">
-        {showUndo && (
+        {controls?.undo && (
           <button onClick={handleUndo} disabled={undoDisabled}>
             Undo
           </button>
         )}
-        {showExportToPng && (
+        {controls?.exportToPng && (
           <button disabled={undoDisabled} onClick={() => downloadPng(canvasRef.current!)}>
             Download PNG
           </button>
         )}
-        {showExportJson && (
+        {controls?.exportJson && (
           <button disabled={undoDisabled} onClick={() => downloadJson(paths)}>
             Download Paths
           </button>

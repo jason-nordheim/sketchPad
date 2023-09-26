@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import typescript from "@rollup/plugin-typescript";
 import dtsPlugin from "vite-plugin-dts";
+import react from "@vitejs/plugin-react";
 import reactRefresh from "@vitejs/plugin-react-refresh";
+import typescript from "@rollup/plugin-typescript";
 
 // https://vitejs.dev/config/
 export default defineConfig({

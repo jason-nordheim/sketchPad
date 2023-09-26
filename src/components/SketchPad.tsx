@@ -48,6 +48,7 @@ export const SketchPad: FC<SketchPadProps & DrawPathOptions> = (props) => {
     if (!ctx) throw new Error("No context found");
     return ctx;
   }, [canvasRef]);
+
   const draw = useCallback(() => {
     const ctx = getContext();
     ctx.clearRect(0, 0, size, size);

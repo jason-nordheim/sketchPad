@@ -2,6 +2,8 @@
 
 A simple React component for creating sketches created with React, TypeScript and Vite.
 
+Docs created using Storybook.
+
 ## Features
 
 - Draw a path
@@ -9,11 +11,14 @@ A simple React component for creating sketches created with React, TypeScript an
 - Download as PNG
 - Download as Paths (as JSON)
 
-
-
 ## Install
 
-`npm install react-canvas-sketchpad`
+This package is published to [npm](https://www.npmjs.com/package/react-canvas-sketchpad)
+
+```sh
+# in your project directory
+npm install react-canvas-sketchpad
+```
 
 ## Usage
 
@@ -51,5 +56,5 @@ The default to the following values:
   showUndo: true,
   showExportToPng: true,
   showExportJson: true,
-};
+}
 ```

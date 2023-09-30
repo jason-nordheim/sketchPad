@@ -21,7 +21,8 @@
     "sketch",
     "export",
     "typescript",
-    "storybook"
+    "storybook",
+    "vite"
   ],
   "scripts": {
     "dev": "vite",
